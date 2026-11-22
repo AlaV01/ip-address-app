@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Application IPv4 / IPv6 – Mini-projet POO &amp; DevOps</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="slide active">
+  <p class="bigip">203<span>.</span>0<span>.</span>113<span>.</span>42</p>
+  <h1>Application d’adressage IPv4 / IPv6</h1>
+  <p>Mini-projet POO Python et DevOps/DevNet : afficher l’adresse IP publique de son ordinateur grâce à une API REST.</p>
+  <p class="muted">Groupe : Ala Naffoussi (Scrum Leader), Islem Jlejla, Ranim Lassoued, Hazem Jmili</p>
+</section>
+
+<section class="slide">
+  <h2>Contexte et objectifs</h2>
+  <ul>
+    <li>Option 2 du projet Cisco : « Create an IPv4/IPv6 Address Application ».</li>
+    <li>Application Python orientée objet : classes, objets, méthodes, encapsulation.</li>
+    <li>Intégration d’une API REST publique et traitement des données JSON.</li>
+    <li>Travail collaboratif avec Git et GitHub : branches, Pull Requests, revues de code.</li>
+  </ul>
+</section>
+
+<section class="slide">
+  <h2>Les API utilisées</h2>
+  <div class="grid">
+    <div class="box"><h3>ipify</h3><p><code>api.ipify.org</code> renvoie l’IPv4 publique.</p><p><code>api64.ipify.org</code> renvoie l’IPv6, ou l’IPv4 si le réseau n’a pas d’IPv6.</p></div>
+    <div class="box alt"><h3>ipinfo.io</h3><p>Renvoie en JSON la ville, la région, le pays, le fournisseur (clé <code>org</code>), le fuseau horaire et la position.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <h2>Architecture</h2>
+  <div class="flow">
+    <div class="box"><h3>IPClient</h3><p>Appelle les API, lève <code>APIError</code> en cas de problème réseau.</p></div>
+    <span class="arrow">→</span>
+    <div class="box"><h3>IPInfo</h3><p>Représente une adresse : <code>ip</code>, <code>ip_version</code>, <code>to_dict()</code>, <code>to_json()</code>.</p></div>
+    <span class="arrow">→</span>
+    <div class="box alt"><h3>Display</h3><p>Menu, tableau et messages d’erreur dans la console.</p></div>
+  </div>
+  <p><code>main.py</code> relie les trois classes. Les objets sont passés au constructeur (injection de dépendances), ce qui permet de tester avec de faux objets.</p>
+</section>
+
+<section class="slide">
+  <h2>Qui a fait quoi</h2>
+  <table>
+    <tr><th>Membre</th><th>Partie</th><th>Fichiers</th></tr>
+    <tr><td>Ala Naffoussi</td><td>Scrum Leader, dépôt, fiche Cisco, coordination</td><td><code>README.md</code>, <code>docs/</code></td></tr>
+    <tr><td>Islem Jlejla</td><td>Client API et gestion des erreurs</td><td><code>ip_client.py</code></td></tr>
+    <tr><td>Ranim Lassoued</td><td>Modèle d’adresse IP</td><td><code>ip_info.py</code></td></tr>
+    <tr><td>Hazem Jmili</td><td>Affichage, programme principal, tests, présentation</td><td><code>display.py</code>, <code>main.py</code>, <code>test_*.py</code></td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>Démonstration</h2>
+  <pre class="term">============================================
+          IP Address Application
+============================================
+1. Afficher mon IPv4 publique
+2. Afficher mon IPv6 publique
+3. Afficher les informations de localisation
+0. Quitter
+Votre choix : <b>1</b></pre>
+  <p class="muted" style="margin-top:1rem">Démo en direct : choix 1, 2 puis 3. Prévoir une capture d’écran de secours.</p>
+</section>
+
+<section class="slide">
+  <h2>Tests unitaires</h2>
+  <pre class="term">$ python -m unittest -v
+test_ask_choice_strips ... ok
+test_show_error ... ok
+test_show_ip ... ok
+test_show_table ... ok
+test_show_table_empty ... ok
+
+Ran 5 tests in 0.00s
+<b>OK</b></pre>
+  <p style="margin-top:1rem">Les tests de <code>Display</code> utilisent <code>unittest.mock</code> pour capturer l’affichage. <span class="todo">Ajouter les tests de main.py</span></p>
+</section>
+
+<section class="slide">
+  <h2>Workflow Git</h2>
+  <ol class="steps">
+    <li>Une branche par fonctionnalité : <code>feature/display</code>, <code>feature/ip-model</code>, <code>docs/readme</code>.</li>
+    <li>Petits commits réguliers avec des messages clairs : <code>feat:</code>, <code>fix:</code>, <code>test:</code>, <code>refactor:</code>.</li>
+    <li>Une Pull Request par branche, relue par un autre membre.</li>
+    <li>Le Scrum Leader demande des changements ou approuve, puis fusionne dans <code>main</code>.</li>
+  </ol>
+  <p class="muted">Insérer ici une capture de l’historique des commits et de la page des Pull Requests.</p>
+</section>
+
+<section class="slide">
+  <h2>Difficultés et solutions</h2>
+  <table>
+    <tr><th>Difficulté</th><th>Solution</th></tr>
+    <tr><td>Fichiers placés dans <code>src/</code> alors que le groupe utilise <code>projet devops/</code></td><td><code>git mv</code> puis correction de l’import : <code>from display import Display</code></td></tr>
+    <tr><td><code>api64.ipify.org</code> renvoie une IPv4 sans réseau IPv6</td><td>Vérifier <code>ip_version == 6</code> et afficher un message clair</td></tr>
+    <tr><td>Valeurs longues qui cassent le tableau</td><td>Couper les valeurs à la largeur de la colonne</td></tr>
+    <tr><td>Fournisseur renvoyé sous la clé <code>org</code></td><td>Construire <code>IPInfo</code> avec <code>isp=data.get("org")</code></td></tr>
+  </table>
+</section>
+
+<section class="slide">
+  <h2>Contributions et conclusion</h2>
+  <ul>
+    <li>Chaque membre a ses branches, ses commits et ses Pull Requests sur GitHub.</li>
+    <li>Chaque membre a relu au moins une Pull Request d’un collègue.</li>
+    <li>Pistes d’amélioration : export JSON ou CSV, historique des consultations, options en ligne de commande.</li>
+  </ul>
+  <p style="margin-top:1rem" class="muted">Merci. Des questions ?</p>
+</section>
+
+<nav>
+  <button id="prev" aria-label="Diapositive précédente">Précédent</button>
+  <button id="next" aria-label="Diapositive suivante">Suivant</button>
+  <span class="count" id="count"></span>
+</nav>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const prev=document.getElementById('prev'),next=document.getElementById('next'),count=document.getElementById('count');
+let i=Math.max(0,Math.min(slides.length-1,(parseInt(location.hash.slice(1))||1)-1));
+function show(n){
+  i=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+  prev.disabled=i===0;next.disabled=i===slides.length-1;
+  count.textContent=(i+1)+' / '+slides.length;
+  history.replaceState(null,'','#'+(i+1));
+}
+prev.onclick=()=>show(i-1);next.onclick=()=>show(i+1);
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();show(i+1)}
+  if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(i-1)}
+  if(e.key==='Home')show(0);if(e.key==='End')show(slides.length-1);
+});
+show(i);
+</script>
+</body>
+</html>
