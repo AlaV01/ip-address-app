@@ -1,7 +1,7 @@
 import unittest
 from io import StringIO
 from unittest.mock import patch
-from src.display import Display
+from display import Display
 
 
 class TestDisplay(unittest.TestCase):
