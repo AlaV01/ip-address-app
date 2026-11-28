@@ -38,4 +38,12 @@ nav button{font:inherit;font-size:.85rem;background:var(--ink);color:#fff;border
 nav button:disabled{opacity:.35;cursor:default}
 nav button:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
 nav .count{margin-left:auto;font-family:var(--mono);font-size:.85rem;color:var(--muted)}
+.shot{display:block;max-width:100%;max-height:60vh;width:auto;height:auto;border:1px solid var(--line);border-radius:4px;align-self:flex-start}
+.cols{display:flex;gap:1.6rem;align-items:flex-start;flex-wrap:wrap}
+.cols .shot{max-height:60vh}
+.cols>div{flex:1 1 16rem}
+.slide.pic{padding:.9rem 2rem;justify-content:flex-start}
+.pic h2{margin-bottom:.7rem}
+.pic .shot{max-height:60vh}
+.pic p{margin-bottom:.4rem}
 @media print{body{overflow:visible}.slide{display:flex!important;position:static;page-break-after:always;min-height:100vh}nav{display:none}}

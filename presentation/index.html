@@ -72,17 +72,15 @@
   </table>
 </section>
 
-<section class="slide">
+<section class="slide pic">
   <h2>Démonstration</h2>
-  <pre class="term">============================================
-          IP Address Application
-============================================
-1. Afficher mon IPv4 publique
-2. Afficher mon IPv6 publique
-3. Afficher les informations de localisation
-0. Quitter
-Votre choix : <b>1</b></pre>
-  <p class="muted" style="margin-top:1rem">Démo en direct : <code>python main.py</code>, choix 1, 2 puis 3. Sans IPv6 sur le réseau, le programme l’indique au lieu d’afficher l’IPv4 deux fois. Prévoir une capture d’écran de secours.</p>
+  <div class="cols">
+    <img class="shot" src="demo-terminal.png" alt="Programme dans le terminal : menu, IPv4, message sans IPv6, tableau des informations">
+    <div>
+      <p>Démo en direct : <code>python main.py</code>, choix 1, 2 puis 3.</p>
+      <p class="muted">Sans IPv6 sur le réseau, le programme l’indique au lieu d’afficher l’IPv4 deux fois. Capture d’écran de secours à gauche.</p>
+    </div>
+  </div>
 </section>
 
 <section class="slide">
@@ -96,18 +94,9 @@ Votre choix : <b>1</b></pre>
   <p class="muted" style="margin-top:1rem">Démo en direct dans le navigateur, avec une capture d’écran de secours.</p>
 </section>
 
-<section class="slide">
+<section class="slide pic">
   <h2>Tests unitaires</h2>
-  <pre class="term">$ python -m unittest -v
-test_valid_ipv4 ... ok
-test_invalid_ip_raises_error ... ok
-test_properties_are_read_only ... ok
-test_no_internet_raises_apierror ... ok
-test_timeout_raises_apierror ... ok
-test_show_table ... ok
-...
-Ran 23 tests in 0.01s
-<b>OK</b></pre>
+  <img class="shot" src="tests.png" alt="python -m unittest : 23 tests, tous ok">
   <p style="margin-top:1rem">23 tests : <code>IPInfo</code> (9), <code>IPClient</code> (9), <code>Display</code> (5). Chaque test utilise <code>assert</code> pour vérifier un résultat. <code>unittest.mock</code> remplace l’appel réseau par une fausse réponse : les tests fonctionnent sans internet.</p>
 </section>
 
@@ -120,6 +109,12 @@ Ran 23 tests in 0.01s
     <li>Le Scrum Leader relit, demande des changements ou approuve, puis fusionne.</li>
   </ol>
   <p class="muted">Voir le dépôt : github.com/AlaV01/ip-address-app (historique des commits et onglet Pull Requests).</p>
+</section>
+
+<section class="slide pic">
+  <h2>Pull Requests sur GitHub</h2>
+  <img class="shot" src="pr-list.png" alt="Liste des Pull Requests fusionnées dans le dépôt">
+  <p class="muted" style="margin-top:.8rem">16 Pull Requests fusionnées, aucune ouverte : une par branche. Les commits, commentaires et revues sont visibles dans chaque Pull Request sur GitHub.</p>
 </section>
 
 <section class="slide">
